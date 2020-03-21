@@ -47,5 +47,19 @@ public class NotPrioritisingPassengerArrayQueue implements PriorityQueue<Passeng
     public int size() {
       return size;
       }
-    
+
+    @Override
+    public void Sort(Passenger[] inputArr) {
+
     }
+
+    @Override
+    public void SortAsc(Passenger[] inputArr) {
+
+    }
+
+    @Override
+    public void SortDesc(Passenger[] inputArr) {
+
+    }
+}

@@ -43,4 +43,39 @@ public class PassengerPriorityQueue implements PriorityQueue<Passenger> {
         return size;
     }
 
+    @Override
+    public void Sort(Passenger[] inputArr) {
+        Heapify(inputArr, size(), );
+    }
+
+    @Override
+    public void SortAsc(Passenger[] inputArr) {
+
+    }
+
+    @Override
+    public void SortDesc(Passenger[] inputArr) {
+
+    }
+
+    public void Heapify(Passenger[] inputArr, int n, int i) {
+        int largest = i;
+        int left = 2 * i + 1;
+        int right = 2 * i + 2;
+
+        if (left < n && inputArr[left].compareTo(inputArr[largest]) > 0) {
+            largest = left;
+        }
+        if (right < n && inputArr[right].compareTo(inputArr[largest]) > 0) {
+            largest = right;
+        }
+
+        if (largest != i) {
+            Passenger swap = inputArr[i];
+            inputArr[i] = inputArr[largest];
+            inputArr[largest] = swap;
+            Heapify(inputArr, n, largest);
+        }
+    }
+
 }
