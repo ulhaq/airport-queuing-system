@@ -21,6 +21,7 @@ public class PassengerPriorityQueue implements PriorityQueue<Passenger> {
         items[tail] = item;
         tail = (tail + 1) % items.length;
         size++;
+
     }
 
     public Passenger dequeue() {
@@ -30,6 +31,9 @@ public class PassengerPriorityQueue implements PriorityQueue<Passenger> {
         items[head] = null;
         head = (head + 1) % items.length;
         size--;
+//        System.out.println("popped item from queue" + item);
+
+        Sort(items);
         return item;
     }
 
@@ -45,17 +49,17 @@ public class PassengerPriorityQueue implements PriorityQueue<Passenger> {
 
     @Override
     public void Sort(Passenger[] inputArr) {
-        Heapify(inputArr, size(), );
-    }
+        for (int i = size() / 2 - 1; i >= 0; i--) {
+            this.Heapify(inputArr, size(), i);
+        }
 
-    @Override
-    public void SortAsc(Passenger[] inputArr) {
+        for (int i = size() - 1; i >= 0; i--) {
+            Passenger temp = inputArr[0];
+            inputArr[0] = inputArr[i];
+            inputArr[i] = temp;
 
-    }
-
-    @Override
-    public void SortDesc(Passenger[] inputArr) {
-
+            Heapify(inputArr, i, 0);
+        }
     }
 
     public void Heapify(Passenger[] inputArr, int n, int i) {
@@ -63,10 +67,12 @@ public class PassengerPriorityQueue implements PriorityQueue<Passenger> {
         int left = 2 * i + 1;
         int right = 2 * i + 2;
 
-        if (left < n && inputArr[left].compareTo(inputArr[largest]) > 0) {
+        if (size() == 1) return;
+
+        if (left < n && inputArr[left].getCategory().compareTo(inputArr[largest].getCategory()) > 0) {
             largest = left;
         }
-        if (right < n && inputArr[right].compareTo(inputArr[largest]) > 0) {
+        if (right < n && inputArr[right].getCategory().compareTo(inputArr[largest].getCategory()) > 0) {
             largest = right;
         }
 

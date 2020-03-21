@@ -7,7 +7,7 @@ import java.util.NoSuchElementException;
  * An implementation of a queue using a fixed, non-expandable array whose
  * capacity is set in its constructor.
  * @author mbeg
-  
+
  */
 public class NotPrioritisingPassengerArrayQueue implements PriorityQueue<Passenger> {
     private final Passenger[] items;
@@ -50,16 +50,6 @@ public class NotPrioritisingPassengerArrayQueue implements PriorityQueue<Passeng
 
     @Override
     public void Sort(Passenger[] inputArr) {
-
-    }
-
-    @Override
-    public void SortAsc(Passenger[] inputArr) {
-
-    }
-
-    @Override
-    public void SortDesc(Passenger[] inputArr) {
 
     }
 }
