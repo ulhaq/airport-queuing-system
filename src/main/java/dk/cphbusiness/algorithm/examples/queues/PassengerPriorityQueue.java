@@ -54,11 +54,11 @@ public class PassengerPriorityQueue implements PriorityQueue<Passenger> {
         }
 
         for (int i = size() - 1; i >= 0; i--) {
-            Passenger temp = inputArr[0];
-            inputArr[0] = inputArr[i];
+            Passenger temp = inputArr[head];
+            inputArr[head] = inputArr[i];
             inputArr[i] = temp;
 
-            Heapify(inputArr, i, 0);
+            Heapify(inputArr, i, head);
         }
     }
 
@@ -69,10 +69,10 @@ public class PassengerPriorityQueue implements PriorityQueue<Passenger> {
 
         if (size() == 1) return;
 
-        if (left < n && inputArr[left].getCategory().compareTo(inputArr[largest].getCategory()) > 0) {
+        if (left < n && inputArr[left].getCategory().ordinal() > inputArr[largest].getCategory().ordinal()) {
             largest = left;
         }
-        if (right < n && inputArr[right].getCategory().compareTo(inputArr[largest].getCategory()) > 0) {
+        if (right < n && inputArr[right].getCategory().ordinal() > inputArr[largest].getCategory().ordinal()) {
             largest = right;
         }
 
