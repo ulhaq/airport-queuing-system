@@ -19,7 +19,7 @@ public class Plane {
 
   public Time getDepartureTime() {
     return departureTime;
-    }
+}
 
   public int getSeatCount() {
     return seatCount;
