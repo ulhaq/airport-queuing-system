@@ -49,7 +49,7 @@ public class NotPrioritisingPassengerArrayQueue implements PriorityQueue<Passeng
       }
 
     @Override
-    public void Sort(Passenger[] inputArr) {
+    public void Sort(Passenger[] inputArr, int low, int high) {
 
     }
 }

@@ -1,6 +1,9 @@
 package dk.cphbusiness.algorithm.examples.queues;
 
+import dk.cphbusiness.airport.template.Category;
 import dk.cphbusiness.airport.template.Passenger;
+import dk.cphbusiness.airport.template.Plane;
+import dk.cphbusiness.airport.template.Time;
 
 import java.util.NoSuchElementException;
 
@@ -12,16 +15,26 @@ public class PassengerPriorityQueue implements PriorityQueue<Passenger> {
 
     public PassengerPriorityQueue(int capacity) {
         items = new Passenger[capacity];
+
     }
 
 
     public void enqueue(Passenger item) {
+        if(size == 0){
+            items[tail] = item;
+            tail = (tail + 1) % items.length;
+            size++;
+        }
         if (size == items.length)
             throw new IllegalStateException("Cannot add to full queue");
+        for(int i = size-1; i >= 0; i--){
+            if(items[i].getCategory().ordinal() > item.getCategory().ordinal()){
+                items[i+1] = items[i];
+            } else break;
+        }
         items[tail] = item;
         tail = (tail + 1) % items.length;
         size++;
-
     }
 
     public Passenger dequeue() {
@@ -31,9 +44,6 @@ public class PassengerPriorityQueue implements PriorityQueue<Passenger> {
         items[head] = null;
         head = (head + 1) % items.length;
         size--;
-//        System.out.println("popped item from queue" + item);
-
-        Sort(items);
         return item;
     }
 
@@ -47,41 +57,47 @@ public class PassengerPriorityQueue implements PriorityQueue<Passenger> {
         return size;
     }
 
+    public void sort(Passenger[] inputArr){
+        int n = size();
+        Sort(inputArr, head, n);
+    }
+
+
     @Override
-    public void Sort(Passenger[] inputArr) {
-        for (int i = size() / 2 - 1; i >= 0; i--) {
-            this.Heapify(inputArr, size(), i);
-        }
-
-        for (int i = size() - 1; i >= 0; i--) {
-            Passenger temp = inputArr[head];
-            inputArr[head] = inputArr[i];
-            inputArr[i] = temp;
-
-            Heapify(inputArr, i, head);
+    public void Sort(Passenger[] inputArr, int low, int high) {
+        if(low < high) {
+            int middle = (low + high)/ 2;
+            Sort(inputArr, low, middle);
+            Sort(inputArr, middle+1, high);
+            merge(inputArr, low, middle, high);
         }
     }
+    public void merge(Passenger[] arr, int low, int mid, int high){
+        if(size() == 1) return;
+        int lengthforLeftArr = (mid - low) + 1;
+        int lengthforRightArr = (high - mid);
 
-    public void Heapify(Passenger[] inputArr, int n, int i) {
-        int largest = i;
-        int left = 2 * i + 1;
-        int right = 2 * i + 2;
+        Passenger[] left = new Passenger[lengthforLeftArr];
+        Passenger[] right = new Passenger[lengthforRightArr];
 
-        if (size() == 1) return;
-
-        if (left < n && inputArr[left].getCategory().ordinal() > inputArr[largest].getCategory().ordinal()) {
-            largest = left;
-        }
-        if (right < n && inputArr[right].getCategory().ordinal() > inputArr[largest].getCategory().ordinal()) {
-            largest = right;
+        for(int i = 0; i < left.length; i++){
+            left[i] = arr[low + i];
         }
 
-        if (largest != i) {
-            Passenger swap = inputArr[i];
-            inputArr[i] = inputArr[largest];
-            inputArr[largest] = swap;
-            Heapify(inputArr, n, largest);
+        for(int j = 0; j < right.length; j++){
+            right[j] = arr[mid + 1 + j];
+        }
+
+        int j = 0, i = 0, k = low;
+
+        while(i < lengthforLeftArr && j < lengthforRightArr) {
+            if (left[i].getCategory().compareTo(right[j].getCategory()) <= 0) {
+                arr[k] = left[i];
+                i++;
+            } else {
+                arr[k] = right[j];
+                j++;
+            }
         }
     }
-
 }
